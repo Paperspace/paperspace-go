@@ -1,2 +1,2 @@
 # paperspace-go
-Paperspace golang module
+Paperspace API go library
