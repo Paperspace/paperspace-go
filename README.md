@@ -1,6 +1,2 @@
-# paperspace-go
-Paperspace API go library
+# go-paperspace
 
-Coming soon...
-
-Want to contribute?  Contact us at hello@paperspace.com
