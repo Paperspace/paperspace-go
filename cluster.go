@@ -1,6 +1,9 @@
 package paperspace
 
-import "fmt"
+import (
+	"context"
+	"fmt"
+)
 
 type ClusterPlatformType string
 
@@ -49,10 +52,10 @@ type ClusterCreateParams struct {
 	ArtifactsBucketPath      string `json:"bucketPath,omitempty" yaml:"artifactsBucketPath,omitempty"`
 	ArtifactsSecretAccessKey string `json:"secretKey,omitempty" yaml:"artifactsSecretAccessKey,omitempty"`
 	Domain                   string `json:"fqdn" yaml:"domain"`
-	IsDefault                bool   `json:"isDefault,omitempty" yaml"isDefault,omitempty"`
+	IsDefault                bool   `json:"isDefault,omitempty" yaml:"isDefault,omitempty"`
 	Name                     string `json:"name" yaml:"name"`
 	Platform                 string `json:"cloud,omitempty" yaml:"platform,omitempty"`
-	Region                   string `json:"region,omitempty, yaml:"region,omitempty"`
+	Region                   string `json:"region,omitempty" yaml:"region,omitempty"`
 	Type                     int    `json:"type,omitempty" yaml:"type,omitempty"`
 }
 
@@ -95,26 +98,26 @@ func NewClusterListParams() *ClusterListParams {
 	return &clusterListParams
 }
 
-func (c Client) CreateCluster(params ClusterCreateParams) (Cluster, error) {
+func (c Client) CreateCluster(ctx context.Context, params ClusterCreateParams) (Cluster, error) {
 	cluster := Cluster{}
 	params.Type = DefaultClusterType
 
 	url := fmt.Sprintf("/clusters/createCluster")
-	_, err := c.Request("POST", url, params, &cluster)
+	_, err := c.Request(ctx, "POST", url, params, &cluster)
 
 	return cluster, err
 }
 
-func (c Client) GetCluster(ID string) (Cluster, error) {
+func (c Client) GetCluster(ctx context.Context, ID string) (Cluster, error) {
 	cluster := Cluster{}
 
 	url := fmt.Sprintf("/clusters/getCluster?id=%s", ID)
-	_, err := c.Request("GET", url, nil, &cluster)
+	_, err := c.Request(ctx, "GET", url, nil, &cluster)
 
 	return cluster, err
 }
 
-func (c Client) GetClusters(p ...ClusterListParams) ([]Cluster, error) {
+func (c Client) GetClusters(ctx context.Context, p ...ClusterListParams) ([]Cluster, error) {
 	clusters := []Cluster{}
 	params := NewClusterListParams()
 
@@ -123,16 +126,16 @@ func (c Client) GetClusters(p ...ClusterListParams) ([]Cluster, error) {
 	}
 
 	url := fmt.Sprintf("/clusters/getClusters")
-	_, err := c.Request("GET", url, params, &clusters)
+	_, err := c.Request(ctx, "GET", url, params, &clusters)
 
 	return clusters, err
 }
 
-func (c Client) UpdateCluster(id string, p ClusterUpdateParams) (Cluster, error) {
+func (c Client) UpdateCluster(ctx context.Context, id string, p ClusterUpdateParams) (Cluster, error) {
 	cluster := Cluster{}
 
 	url := fmt.Sprintf("/clusters/updateCluster")
-	_, err := c.Request("POST", url, p, &cluster)
+	_, err := c.Request(ctx, "POST", url, p, &cluster)
 
 	return cluster, err
 }
