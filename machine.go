@@ -95,10 +95,10 @@ func (c Client) CreateMachine(ctx context.Context, params MachineCreateParams) (
 	return machine, err
 }
 
-func (c Client) GetMachine(ctx context.Context, ID string) (Machine, error) {
+func (c Client) GetMachine(ctx context.Context, id string) (Machine, error) {
 	machine := Machine{}
 
-	url := fmt.Sprintf("/machines/getMachinePublic?machineId=%s", ID)
+	url := fmt.Sprintf("/machines/getMachinePublic?machineId=%s", id)
 	_, err := c.Request(ctx, "GET", url, nil, &machine)
 
 	return machine, err
@@ -127,8 +127,8 @@ func (c Client) UpdateMachine(ctx context.Context, p MachineUpdateParams) (Machi
 	return machine, err
 }
 
-func (c Client) DeleteMachine(ctx context.Context, ID string) error {
-	url := fmt.Sprintf("/machines/%s/destroyMachine", ID)
+func (c Client) DeleteMachine(ctx context.Context, id string) error {
+	url := fmt.Sprintf("/machines/%s/destroyMachine", id)
 	_, err := c.Request(ctx, "POST", url, nil, nil)
 
 	return err

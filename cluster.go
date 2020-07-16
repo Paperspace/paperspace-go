@@ -108,10 +108,10 @@ func (c Client) CreateCluster(ctx context.Context, params ClusterCreateParams) (
 	return cluster, err
 }
 
-func (c Client) GetCluster(ctx context.Context, ID string) (Cluster, error) {
+func (c Client) GetCluster(ctx context.Context, id string) (Cluster, error) {
 	cluster := Cluster{}
 
-	url := fmt.Sprintf("/clusters/getCluster?id=%s", ID)
+	url := fmt.Sprintf("/clusters/getCluster?id=%s", id)
 	_, err := c.Request(ctx, "GET", url, nil, &cluster)
 
 	return cluster, err
