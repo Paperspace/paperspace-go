@@ -8,10 +8,6 @@ import (
 
 type MachineState string
 
-func (s MachineState) String() string {
-	return string(s)
-}
-
 const (
 	MachineStateOff          MachineState = "off"
 	MachineStateProvisioning MachineState = "provisioning"
@@ -82,10 +78,6 @@ type MachineUpdateParams struct {
 	DynamicPublicIP        bool   `json:"dynamicPublicIp,omitempty"`
 }
 
-type MachineDeleteParams struct {
-	ID string `json:"machineId"`
-}
-
 func NewMachineListParams() *MachineListParams {
 	machineListParams := MachineListParams{
 		Filter: make(map[string]string),
@@ -135,8 +127,8 @@ func (c Client) UpdateMachine(ctx context.Context, p MachineUpdateParams) (Machi
 	return machine, err
 }
 
-func (c Client) DeleteMachine(ctx context.Context, p MachineDeleteParams) error {
-	url := fmt.Sprintf("/machines/%s/destroyMachine", p.ID)
+func (c Client) DeleteMachine(ctx context.Context, ID string) error {
+	url := fmt.Sprintf("/machines/%s/destroyMachine", ID)
 	_, err := c.Request(ctx, "POST", url, nil, nil)
 
 	return err
