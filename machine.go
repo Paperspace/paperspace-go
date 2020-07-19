@@ -103,15 +103,15 @@ func (c Client) CreateMachine(params MachineCreateParams) (Machine, error) {
 }
 
 func (c Client) GetMachine(id string, p ...RequestParams) (Machine, error) {
-	var params RequestParams
+	var requestParams RequestParams
 	machine := Machine{}
 
 	if len(p) > 0 {
-		params = p[0]
+		requestParams = p[0]
 	}
 
 	url := fmt.Sprintf("/machines/getMachinePublic?machineId=%s", id)
-	_, err := c.Request("GET", url, nil, &machine, params)
+	_, err := c.Request("GET", url, nil, &machine, requestParams)
 
 	return machine, err
 }
@@ -140,14 +140,14 @@ func (c Client) UpdateMachine(p MachineUpdateParams) (Machine, error) {
 }
 
 func (c Client) DeleteMachine(id string, p ...RequestParams) error {
-	var params RequestParams
+	var requestParams RequestParams
 
 	if len(p) > 0 {
-		params = p[0]
+		requestParams = p[0]
 	}
 
 	url := fmt.Sprintf("/machines/%s/destroyMachine", id)
-	_, err := c.Request("POST", url, nil, nil, params)
+	_, err := c.Request("POST", url, nil, nil, requestParams)
 
 	return err
 }
