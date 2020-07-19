@@ -35,12 +35,12 @@ func NewAPIBackend() *APIBackend {
 }
 
 func (c *APIBackend) Request(method string, url string,
-	params, result interface{}, clientParams ClientParams) (res *http.Response, err error) {
+	params, result interface{}, requestParams RequestParams) (res *http.Response, err error) {
 	for i := 0; i < c.RetryCount+1; i++ {
 		retryDuration := time.Duration((math.Pow(2, float64(i))-1)/2*1000) * time.Millisecond
 		time.Sleep(retryDuration)
 
-		res, err = c.request(method, url, params, result, clientParams)
+		res, err = c.request(method, url, params, result, requestParams)
 		if res != nil && res.StatusCode == 429 {
 			continue
 		} else {
@@ -52,7 +52,7 @@ func (c *APIBackend) Request(method string, url string,
 }
 
 func (c *APIBackend) request(method string, url string,
-	params, result interface{}, clientParams ClientParams) (res *http.Response, err error) {
+	params, result interface{}, requestParams RequestParams) (res *http.Response, err error) {
 	var data []byte
 	var req *http.Request
 	body := bytes.NewReader(make([]byte, 0))
@@ -68,13 +68,13 @@ func (c *APIBackend) request(method string, url string,
 
 	fullURL := fmt.Sprintf("%s%s", c.BaseURL, url)
 
-	if clientParams.Context == nil {
+	if requestParams.Context == nil {
 		req, err = http.NewRequest(method, fullURL, body)
 		if err != nil {
 			return res, err
 		}
 	} else {
-		req, err = http.NewRequestWithContext(clientParams.Context, method, fullURL, body)
+		req, err = http.NewRequestWithContext(requestParams.Context, method, fullURL, body)
 		if err != nil {
 			return res, err
 		}
@@ -84,7 +84,7 @@ func (c *APIBackend) request(method string, url string,
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("User-Agent", "Go Paperspace Gradient 1.0")
 
-	for key, value := range clientParams.Headers {
+	for key, value := range requestParams.Headers {
 		req.Header.Add(key, value)
 	}
 

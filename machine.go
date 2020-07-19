@@ -43,7 +43,7 @@ type Machine struct {
 }
 
 type MachineCreateParams struct {
-	ClientParams
+	RequestParams
 
 	Name                   string `json:"name"`
 	Region                 string `json:"region"`
@@ -61,19 +61,19 @@ type MachineCreateParams struct {
 }
 
 type MachineListParams struct {
-	ClientParams
+	RequestParams
 
 	Filter map[string]string `json:"filter"`
 }
 
 type MachineUpdateAttributeParams struct {
-	ClientParams
+	RequestParams
 
 	Name string `json:"name,omitempty" yaml:"name"`
 }
 
 type MachineUpdateParams struct {
-	ClientParams
+	RequestParams
 
 	ID                     string `json:"machineId"`
 	Name                   string `json:"machineName,omitempty"`
@@ -97,13 +97,13 @@ func (c Client) CreateMachine(params MachineCreateParams) (Machine, error) {
 	machine := Machine{}
 
 	url := fmt.Sprintf("/machines/createSingleMachinePublic")
-	_, err := c.Request("POST", url, params, &machine, params.ClientParams)
+	_, err := c.Request("POST", url, params, &machine, params.RequestParams)
 
 	return machine, err
 }
 
-func (c Client) GetMachine(id string, p ...ClientParams) (Machine, error) {
-	var params ClientParams
+func (c Client) GetMachine(id string, p ...RequestParams) (Machine, error) {
+	var params RequestParams
 	machine := Machine{}
 
 	if len(p) > 0 {
@@ -125,7 +125,7 @@ func (c Client) GetMachines(p ...MachineListParams) ([]Machine, error) {
 	}
 
 	url := fmt.Sprintf("/machines/getMachines")
-	_, err := c.Request("GET", url, params, &machines, params.ClientParams)
+	_, err := c.Request("GET", url, params, &machines, params.RequestParams)
 
 	return machines, err
 }
@@ -134,13 +134,13 @@ func (c Client) UpdateMachine(p MachineUpdateParams) (Machine, error) {
 	machine := Machine{}
 
 	url := fmt.Sprintf("/machines/updateMachine")
-	_, err := c.Request("POST", url, p, &machine, p.ClientParams)
+	_, err := c.Request("POST", url, p, &machine, p.RequestParams)
 
 	return machine, err
 }
 
-func (c Client) DeleteMachine(id string, p ...ClientParams) error {
-	var params ClientParams
+func (c Client) DeleteMachine(id string, p ...RequestParams) error {
+	var params RequestParams
 
 	if len(p) > 0 {
 		params = p[0]
