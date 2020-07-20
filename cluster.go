@@ -61,6 +61,9 @@ type ClusterCreateParams struct {
 	Type                     int    `json:"type,omitempty" yaml:"type,omitempty"`
 }
 
+type ClusterGetParams struct {
+	RequestParams
+}
 type ClusterListParams struct {
 	RequestParams
 
@@ -72,6 +75,17 @@ type ClusterUpdateAttributeParams struct {
 
 	Domain string `json:"fqdn,omitempty" yaml:"domain"`
 	Name   string `json:"name,omitempty" yaml:"name"`
+}
+
+type ClusterUpdateParams struct {
+	RequestParams
+
+	Attributes         ClusterUpdateAttributeParams `json:"attributes,omitempty"`
+	CreateNewToken     bool                         `json:"createNewToken,omitempty"`
+	RegistryAttributes ClusterUpdateRegistryParams  `json:"registryAttributes,omitempty"`
+	ID                 string                       `json:"id"`
+	RetryWorkflow      bool                         `json:"retryWorkflow,omitempty"`
+	S3Attributes       ClusterUpdateS3Params        `json:"s3Attributes,omitempty"`
 }
 
 type ClusterUpdateRegistryParams struct {
@@ -89,17 +103,6 @@ type ClusterUpdateS3Params struct {
 	AccessKey string `json:"accessKey,omitempty"`
 	Bucket    string `json:"bucket,omitempty"`
 	SecretKey string `json:"secretKey,omitempty"`
-}
-
-type ClusterUpdateParams struct {
-	RequestParams
-
-	Attributes         ClusterUpdateAttributeParams `json:"attributes,omitempty"`
-	CreateNewToken     bool                         `json:"createNewToken,omitempty"`
-	RegistryAttributes ClusterUpdateRegistryParams  `json:"registryAttributes,omitempty"`
-	ID                 string                       `json:"id"`
-	RetryWorkflow      bool                         `json:"retryWorkflow,omitempty"`
-	S3Attributes       ClusterUpdateS3Params        `json:"s3Attributes,omitempty"`
 }
 
 func NewClusterListParams() *ClusterListParams {
@@ -120,27 +123,17 @@ func (c Client) CreateCluster(params ClusterCreateParams) (Cluster, error) {
 	return cluster, err
 }
 
-func (c Client) GetCluster(id string, p ...RequestParams) (Cluster, error) {
-	var requestParams RequestParams
+func (c Client) GetCluster(id string, params ClusterGetParams) (Cluster, error) {
 	cluster := Cluster{}
 
-	if len(p) > 0 {
-		requestParams = p[0]
-	}
-
 	url := fmt.Sprintf("/clusters/getCluster?id=%s", id)
-	_, err := c.Request("GET", url, nil, &cluster, requestParams)
+	_, err := c.Request("GET", url, nil, &cluster, params.RequestParams)
 
 	return cluster, err
 }
 
-func (c Client) GetClusters(p ...ClusterListParams) ([]Cluster, error) {
+func (c Client) GetClusters(params ClusterListParams) ([]Cluster, error) {
 	clusters := []Cluster{}
-	params := NewClusterListParams()
-
-	if len(p) > 0 {
-		params = &p[0]
-	}
 
 	url := fmt.Sprintf("/clusters/getClusters")
 	_, err := c.Request("GET", url, params, &clusters, params.RequestParams)
@@ -148,11 +141,11 @@ func (c Client) GetClusters(p ...ClusterListParams) ([]Cluster, error) {
 	return clusters, err
 }
 
-func (c Client) UpdateCluster(id string, p ClusterUpdateParams) (Cluster, error) {
+func (c Client) UpdateCluster(id string, params ClusterUpdateParams) (Cluster, error) {
 	cluster := Cluster{}
 
 	url := fmt.Sprintf("/clusters/updateCluster")
-	_, err := c.Request("POST", url, p, &cluster, p.RequestParams)
+	_, err := c.Request("POST", url, params, &cluster, params.RequestParams)
 
 	return cluster, err
 }
