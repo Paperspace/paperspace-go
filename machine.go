@@ -60,10 +60,18 @@ type MachineCreateParams struct {
 	IsManaged              bool   `json:"isManaged,omitempty"`
 }
 
+type MachineDeleteParams struct {
+	RequestParams
+}
+
+type MachineGetParams struct {
+	RequestParams
+}
+
 type MachineListParams struct {
 	RequestParams
 
-	Filter map[string]string `json:"filter"`
+	Filter map[string]string `json:"filter,omitempty"`
 }
 
 type MachineUpdateAttributeParams struct {
@@ -102,27 +110,17 @@ func (c Client) CreateMachine(params MachineCreateParams) (Machine, error) {
 	return machine, err
 }
 
-func (c Client) GetMachine(id string, p ...RequestParams) (Machine, error) {
-	var requestParams RequestParams
+func (c Client) GetMachine(id string, params MachineGetParams) (Machine, error) {
 	machine := Machine{}
 
-	if len(p) > 0 {
-		requestParams = p[0]
-	}
-
 	url := fmt.Sprintf("/machines/getMachinePublic?machineId=%s", id)
-	_, err := c.Request("GET", url, nil, &machine, requestParams)
+	_, err := c.Request("GET", url, nil, &machine, params.RequestParams)
 
 	return machine, err
 }
 
-func (c Client) GetMachines(p ...MachineListParams) ([]Machine, error) {
+func (c Client) GetMachines(params MachineListParams) ([]Machine, error) {
 	var machines []Machine
-	params := NewMachineListParams()
-
-	if len(p) > 0 {
-		params = &p[0]
-	}
 
 	url := fmt.Sprintf("/machines/getMachines")
 	_, err := c.Request("GET", url, params, &machines, params.RequestParams)
@@ -130,24 +128,18 @@ func (c Client) GetMachines(p ...MachineListParams) ([]Machine, error) {
 	return machines, err
 }
 
-func (c Client) UpdateMachine(p MachineUpdateParams) (Machine, error) {
+func (c Client) UpdateMachine(params MachineUpdateParams) (Machine, error) {
 	machine := Machine{}
 
 	url := fmt.Sprintf("/machines/updateMachine")
-	_, err := c.Request("POST", url, p, &machine, p.RequestParams)
+	_, err := c.Request("POST", url, params, &machine, params.RequestParams)
 
 	return machine, err
 }
 
-func (c Client) DeleteMachine(id string, p ...RequestParams) error {
-	var requestParams RequestParams
-
-	if len(p) > 0 {
-		requestParams = p[0]
-	}
-
+func (c Client) DeleteMachine(id string, params MachineDeleteParams) error {
 	url := fmt.Sprintf("/machines/%s/destroyMachine", id)
-	_, err := c.Request("POST", url, nil, nil, requestParams)
+	_, err := c.Request("POST", url, nil, nil, params.RequestParams)
 
 	return err
 }
