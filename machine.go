@@ -89,7 +89,7 @@ func NewMachineListParams() *MachineListParams {
 func (c Client) CreateMachine(ctx context.Context, params MachineCreateParams) (Machine, error) {
 	machine := Machine{}
 
-	url := fmt.Sprintf("/machines/createSingleMachinePublic")
+	url := "/machines/createSingleMachinePublic"
 	_, err := c.Request(ctx, "POST", url, params, &machine)
 
 	return machine, err
@@ -112,7 +112,7 @@ func (c Client) GetMachines(ctx context.Context, p ...MachineListParams) ([]Mach
 		params = &p[0]
 	}
 
-	url := fmt.Sprintf("/machines/getMachines")
+	url := "/machines/getMachines"
 	_, err := c.Request(ctx, "GET", url, params, &machines)
 
 	return machines, err
@@ -121,7 +121,7 @@ func (c Client) GetMachines(ctx context.Context, p ...MachineListParams) ([]Mach
 func (c Client) UpdateMachine(ctx context.Context, p MachineUpdateParams) (Machine, error) {
 	machine := Machine{}
 
-	url := fmt.Sprintf("/machines/updateMachine")
+	url := "/machines/updateMachine"
 	_, err := c.Request(ctx, "POST", url, p, &machine)
 
 	return machine, err

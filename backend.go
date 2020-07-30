@@ -7,4 +7,5 @@ import (
 
 type Backend interface {
 	Request(ctx context.Context, method string, url string, params, result interface{}, headers map[string]string) (*http.Response, error)
+	RequestServices(ctx context.Context, method string, url string, params, result interface{}, headers map[string]string) (*http.Response, error)
 }

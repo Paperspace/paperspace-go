@@ -102,7 +102,7 @@ func (c Client) CreateCluster(ctx context.Context, params ClusterCreateParams) (
 	cluster := Cluster{}
 	params.Type = DefaultClusterType
 
-	url := fmt.Sprintf("/clusters/createCluster")
+	url := "/clusters/createCluster"
 	_, err := c.Request(ctx, "POST", url, params, &cluster)
 
 	return cluster, err
@@ -125,7 +125,7 @@ func (c Client) GetClusters(ctx context.Context, p ...ClusterListParams) ([]Clus
 		params = &p[0]
 	}
 
-	url := fmt.Sprintf("/clusters/getClusters")
+	url := "/clusters/getClusters"
 	_, err := c.Request(ctx, "GET", url, params, &clusters)
 
 	return clusters, err
@@ -134,7 +134,7 @@ func (c Client) GetClusters(ctx context.Context, p ...ClusterListParams) ([]Clus
 func (c Client) UpdateCluster(ctx context.Context, id string, p ClusterUpdateParams) (Cluster, error) {
 	cluster := Cluster{}
 
-	url := fmt.Sprintf("/clusters/updateCluster")
+	url := "/clusters/updateCluster"
 	_, err := c.Request(ctx, "POST", url, p, &cluster)
 
 	return cluster, err

@@ -14,20 +14,25 @@ import (
 	"time"
 )
 
-var DefaultBaseURL = "https://api.paperspace.io"
+const (
+	DefaultBaseURL         = "https://api.paperspace.io"
+	DefaultServicesBaseURL = "https://services.paperspace.io"
+)
 
 type APIBackend struct {
-	BaseURL    string
-	Debug      bool
-	DebugBody  bool
-	HTTPClient *http.Client
-	RetryCount int
+	BaseURL         string
+	ServicesBaseURL string
+	Debug           bool
+	DebugBody       bool
+	HTTPClient      *http.Client
+	RetryCount      int
 }
 
 func NewAPIBackend() *APIBackend {
 	return &APIBackend{
-		BaseURL: DefaultBaseURL,
-		Debug:   false,
+		BaseURL:         DefaultBaseURL,
+		ServicesBaseURL: DefaultServicesBaseURL,
+		Debug:           false,
 		HTTPClient: &http.Client{
 			Timeout: 15 * time.Second,
 		},
@@ -35,13 +40,37 @@ func NewAPIBackend() *APIBackend {
 	}
 }
 
-func (c *APIBackend) Request(ctx context.Context, method string, url string,
-	params, result interface{}, headers map[string]string) (res *http.Response, err error) {
+// Request sends an http request to the paperspace api, default api.paperspace.io
+func (c *APIBackend) Request(
+	ctx context.Context,
+	method, url string,
+	params, result interface{},
+	headers map[string]string,
+) (res *http.Response, err error) {
+	return c.requestWithRetry(ctx, c.BaseURL, method, url, params, result, headers)
+}
+
+// RequestServices sends an http request to the services cluster, default services.paperspace.io
+func (c *APIBackend) RequestServices(
+	ctx context.Context,
+	method, url string,
+	params, result interface{},
+	headers map[string]string,
+) (res *http.Response, err error) {
+	return c.requestWithRetry(ctx, c.ServicesBaseURL, method, url, params, result, headers)
+}
+
+func (c *APIBackend) requestWithRetry(
+	ctx context.Context,
+	backend, method, url string,
+	params, result interface{},
+	headers map[string]string,
+) (res *http.Response, err error) {
 	for i := 0; i < c.RetryCount+1; i++ {
 		retryDuration := time.Duration((math.Pow(2, float64(i))-1)/2*1000) * time.Millisecond
 		time.Sleep(retryDuration)
 
-		res, err = c.request(ctx, method, url, params, result, headers)
+		res, err = c.request(ctx, backend, method, url, params, result, headers)
 		if res != nil && res.StatusCode == 429 {
 			continue
 		} else {
@@ -52,8 +81,12 @@ func (c *APIBackend) Request(ctx context.Context, method string, url string,
 	return res, err
 }
 
-func (c *APIBackend) request(ctx context.Context, method string, url string,
-	params, result interface{}, headers map[string]string) (res *http.Response, err error) {
+func (c *APIBackend) request(
+	ctx context.Context,
+	backend, method, url string,
+	params, result interface{},
+	headers map[string]string,
+) (res *http.Response, err error) {
 	var data []byte
 	body := bytes.NewReader(make([]byte, 0))
 
@@ -66,7 +99,7 @@ func (c *APIBackend) request(ctx context.Context, method string, url string,
 		body = bytes.NewReader(data)
 	}
 
-	fullURL := fmt.Sprintf("%s%s", c.BaseURL, url)
+	fullURL := fmt.Sprintf("%s%s", backend, url)
 	req, err := http.NewRequestWithContext(ctx, method, fullURL, body)
 	if err != nil {
 		return res, err
