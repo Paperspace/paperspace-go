@@ -10,7 +10,7 @@ type AutoscalingGroup struct {
 	Min         int       `json:"min"`
 	Max         int       `json:"max"`
 	Current     int       `json:"current"`
-	ClusterID string `json:"clusterId"`
+	ClusterID   string    `json:"clusterId"`
 	MachineType string    `json:"machineType"`
 	TemplateID  string    `json:"templateId"`
 	ScriptID    string    `json:"startupScriptId"`
@@ -24,7 +24,7 @@ type AutoscalingGroupCreateParams struct {
 	Name        string `json:"name"`
 	Min         int    `json:"min"`
 	Max         int    `json:"max"`
-	ClusterID string `json:"clusterId"`
+	ClusterID   string `json:"clusterId"`
 	MachineType string `json:"machineType"`
 	TemplateID  string `json:"templateId"`
 	ScriptID    string `json:"startupScriptId,omitempty"`
@@ -53,7 +53,7 @@ type AutoscalingGroupUpdateAttributeParams struct {
 	Min         int    `json:"min,omitempty"`
 	Max         int    `json:"max,omitempty"`
 	Current     int    `json:"current,omitempty"`
-	ClusterID string `json:"clusterId,omitempty`
+	ClusterID   string `json:"clusterId,omitempty`
 	MachineType string `json:"machineType,omitempty"`
 	TemplateID  string `json:"templateId,omitempty"`
 	ScriptID    string `json:"startupScriptId,omitempty"`
