@@ -14,3 +14,9 @@ func getClient() *paperspace.Client {
     return client
 }
 ```
+
+## Environment Variables
+- PAPERSPACE_APIKEY: Paperspace API key
+- PAPERSPACE_BASEURL: Paperspace API url
+- PAPERSPACE_DEBUG: Enable debugging
+- PAPERSPACE_DEBUG_BODY: Enable debug for response body
