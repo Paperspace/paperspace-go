@@ -44,8 +44,8 @@ type AutoscalingGroupGetParams struct {
 type AutoscalingGroupListParams struct {
 	RequestParams
 
-	Filter       map[string]string `json:"filter,omitempty"`
-	IncludeNodes bool              `json:"includeNodes,omitempty"`
+	Filter       Filter `json:"filter,omitempty"`
+	IncludeNodes bool   `json:"includeNodes,omitempty"`
 }
 
 type AutoscalingGroupUpdateAttributeParams struct {
