@@ -53,7 +53,6 @@ type AutoscalingGroupUpdateAttributeParams struct {
 	Min         int    `json:"min,omitempty"`
 	Max         int    `json:"max,omitempty"`
 	Current     int    `json:"current,omitempty"`
-	ClusterID   string `json:"clusterId,omitempty`
 	MachineType string `json:"machineType,omitempty"`
 	TemplateID  string `json:"templateId,omitempty"`
 	ScriptID    string `json:"startupScriptId,omitempty"`
