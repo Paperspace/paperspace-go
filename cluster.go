@@ -50,15 +50,19 @@ type Cluster struct {
 type ClusterCreateParams struct {
 	RequestParams
 
-	ArtifactsAccessKeyID     string `json:"accessKey,omitempty" yaml:"artifactsAccessKeyId,omitempty"`
-	ArtifactsBucketPath      string `json:"bucketPath,omitempty" yaml:"artifactsBucketPath,omitempty"`
-	ArtifactsSecretAccessKey string `json:"secretKey,omitempty" yaml:"artifactsSecretAccessKey,omitempty"`
-	Domain                   string `json:"fqdn" yaml:"domain"`
-	IsDefault                bool   `json:"isDefault,omitempty" yaml:"isDefault,omitempty"`
-	Name                     string `json:"name" yaml:"name"`
-	Platform                 string `json:"cloud,omitempty" yaml:"platform,omitempty"`
-	Region                   string `json:"region,omitempty" yaml:"region,omitempty"`
-	Type                     int    `json:"type,omitempty" yaml:"type,omitempty"`
+	ArtifactsAccessKeyID        string `json:"accessKey,omitempty" yaml:"artifactsAccessKeyId,omitempty"`
+	ArtifactsBucketPath         string `json:"bucketPath,omitempty" yaml:"artifactsBucketPath,omitempty"`
+	ArtifactsSecretAccessKey    string `json:"secretKey,omitempty" yaml:"artifactsSecretAccessKey,omitempty"`
+	Domain                      string `json:"fqdn" yaml:"domain"`
+	IsDefault                   bool   `json:"isDefault,omitempty" yaml:"isDefault,omitempty"`
+	Name                        string `json:"name" yaml:"name"`
+	Platform                    string `json:"cloud,omitempty" yaml:"platform,omitempty"`
+	Region                      string `json:"region,omitempty" yaml:"region,omitempty"`
+	Type                        int    `json:"type,omitempty" yaml:"type,omitempty"`
+	ContainerRegistryURL        string `json:"containerRegistryUrl,omitempty" yaml:"containerRegistryUrl,omitempty"`
+	ContainerRegistryRepository string `json:"containerRegistryRepository,omitempty" yaml:"containerRegistryRepository,omitempty"`
+	ContainerRegistryUsername   string `json:"containerRegistryUsername,omitempty" yaml:"containerRegistryUsername,omitempty"`
+	ContainerRegistryPassword   string `json:"containerRegistryPassword,omitempty" yaml:"containerRegistryPassword,omitempty"`
 }
 
 type ClusterGetParams struct {
