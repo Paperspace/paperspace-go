@@ -8,6 +8,8 @@ type ClusterPlatformType string
 
 const (
 	ClusterPlatformAWS        ClusterPlatformType = "aws"
+	ClusterPlatformAzure      ClusterPlatformType = "azure"
+	ClusterPlatformGCP        ClusterPlatformType = "gcp"
 	ClusterPlatformDGX        ClusterPlatformType = "nvidia-dgx"
 	ClusterPlatformMetal      ClusterPlatformType = "metal"
 	ClusterPlatformPaperspace ClusterPlatformType = "paperspace-cloud"
@@ -27,9 +29,61 @@ var ClusterAWSRegions = []string{
 	"ap-southeast-2",
 }
 
+var ClusterAzureRegions = []string{
+	"australiacentral",
+	"australiaeast",
+	"australiasoutheast",
+	"brazilsouth",
+	"brazilsoutheast",
+	"canadacentral",
+	"canadaeast",
+	"centralindia",
+	"centralus",
+	"eastasia",
+	"eastus",
+	"eastus2",
+	"francecentral",
+	"francesouth",
+	"germanynorth",
+	"germanywestcentral",
+	"japaneast",
+	"japanwest",
+	"koreacentral",
+	"koreasouth",
+	"northcentralus",
+	"northeurope",
+	"norwayeast",
+	"norwaywest",
+	"southafricanorth",
+	"southcentralus",
+	"southindia",
+	"southeastasia",
+	"switzerlandnorth",
+	"switzerlandwest",
+	"uaecentral",
+	"uaenorth",
+	"uksouth",
+	"ukwest",
+	"westcentralus",
+	"westeurope",
+	"westus",
+	"westus2",
+}
+
+var ClusterGCPRegions = []string{
+	"asia-east1",
+	"europe-west1",
+	"europe-west4",
+	"us-central1",
+	"us-east1",
+	"us-west1",
+}
+
 var ClusterPlatforms = []ClusterPlatformType{
 	ClusterPlatformAWS,
+	ClusterPlatformAzure,
 	ClusterPlatformDGX,
+	ClusterPlatformGCP,
 	ClusterPlatformMetal,
 	ClusterPlatformPaperspace,
 }
