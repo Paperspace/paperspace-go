@@ -55,9 +55,10 @@ type MachineCreateParams struct {
 	TeamID                 string `json:"teamId,omitempty"`
 	ScriptID               string `json:"scriptId,omitempty"`
 	NetworkID              string `json:"networkId,omitempty"`
-	ShutdownTimeoutInHours bool   `json:"shutdownTimeoutInHours,omitempty"`
-	AssignPublicIP         bool   `json:"assignPublicIP,omitempty"`
-	IsManaged              bool   `json:"isManaged,omitempty"`
+	ShutdownTimeoutInHours int    `json:"shutdownTimeoutInHours,omitempty"`
+	AssignPublicIP         *bool  `json:"assignPublicIP,omitempty"`
+	IsManaged              *bool  `json:"isManaged,omitempty"`
+	StartOnCreate          *bool  `json:"startOnCreate,omitempty"`
 }
 
 type MachineDeleteParams struct {
@@ -86,11 +87,11 @@ type MachineUpdateParams struct {
 	ID                     string `json:"machineId"`
 	Name                   string `json:"machineName,omitempty"`
 	ShutdownTimeoutInHours int    `json:"shutdownTimeoutInHours,omitempty"`
-	ShutdownTimeoutForces  bool   `json:"shutdownTimeoutForces,omitempty"`
+	ShutdownTimeoutForces  *bool  `json:"shutdownTimeoutForces,omitempty"`
 	AutoSnapshotFrequency  string `json:"autoSnapshotFrequency,omitempty"`
 	AutoSnapshotSaveCount  int    `json:"autoSnapshotSaveCount,omitempty"`
-	PerformAutoSnapshot    bool   `json:"performAutoSnapshot,omitempty"`
-	DynamicPublicIP        bool   `json:"dynamicPublicIp,omitempty"`
+	PerformAutoSnapshot    *bool  `json:"performAutoSnapshot,omitempty"`
+	DynamicPublicIP        *bool  `json:"dynamicPublicIp,omitempty"`
 }
 
 func NewMachineListParams() MachineListParams {
