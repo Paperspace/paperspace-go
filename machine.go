@@ -29,6 +29,8 @@ type Machine struct {
 	ShutdownTimeoutForces  bool         `json:"shutdownTimeoutForces"`
 	AutoSnapshotFrequency  int          `json:"autoSnapshotFrequency"`
 	AutoSnapshotSaveCount  int          `json:"autoSnapshotSaveCount"`
+	RestorePointSnapshotID string       `json:"restorePointSnapshotId"`
+	RestorePointFrequency  string       `json:"restorePointFrequency"`
 	AgentType              string       `json:"agentType"`
 	NetworkID              string       `json:"networkId"`
 	PrivateIpAddress       string       `json:"privateIpAddress"`
@@ -45,20 +47,23 @@ type Machine struct {
 type MachineCreateParams struct {
 	RequestParams
 
-	Name                   string `json:"name"`
-	Region                 string `json:"region"`
-	MachineType            string `json:"machineType"`
-	Size                   int    `json:"size"`
-	BillingType            string `json:"billingType"`
-	TemplateID             string `json:"templateId"`
-	UserID                 string `json:"userId,omitempty"`
-	TeamID                 string `json:"teamId,omitempty"`
-	ScriptID               string `json:"scriptId,omitempty"`
-	NetworkID              string `json:"networkId,omitempty"`
-	ShutdownTimeoutInHours int    `json:"shutdownTimeoutInHours,omitempty"`
-	AssignPublicIP         *bool  `json:"assignPublicIP,omitempty"`
-	IsManaged              *bool  `json:"isManaged,omitempty"`
-	StartOnCreate          *bool  `json:"startOnCreate,omitempty"`
+	Name                       string `json:"name"`
+	Region                     string `json:"region"`
+	MachineType                string `json:"machineType"`
+	Size                       int    `json:"size"`
+	BillingType                string `json:"billingType"`
+	TemplateID                 string `json:"templateId"`
+	UserID                     string `json:"userId,omitempty"`
+	TeamID                     string `json:"teamId,omitempty"`
+	ScriptID                   string `json:"scriptId,omitempty"`
+	NetworkID                  string `json:"networkId,omitempty"`
+	ShutdownTimeoutInHours     int    `json:"shutdownTimeoutInHours,omitempty"`
+	AssignPublicIP             *bool  `json:"assignPublicIP,omitempty"`
+	IsManaged                  *bool  `json:"isManaged,omitempty"`
+	StartOnCreate              *bool  `json:"startOnCreate,omitempty"`
+	TakeInitialSnapshot        *bool  `json:"takeInitialSnapshot,omitempty"`
+	MarkSnapshotAsRestorePoint *bool  `json:"markSnapshotAsRestorePoint,omitempty"`
+	RestorePointFrequency      string `json:"restorePointFrequency,omitempty"`
 }
 
 type MachineDeleteParams struct {
