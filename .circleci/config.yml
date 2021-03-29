@@ -9,6 +9,7 @@ workflows:
       - release-tools/release:
           name: create release
           context: semantic-release
+          workspace: $CIRCLE_WORKING_DIRECTORY
           filters:
             branches:
               only: master
