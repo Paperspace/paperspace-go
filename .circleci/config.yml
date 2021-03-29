@@ -1,0 +1,14 @@
+version: 2.1
+
+orbs:
+  release-tools: paperspace/release-tools@0.1.1
+
+workflows:
+  master:
+    jobs:
+      - release-tools/release:
+          name: create release
+          context: semantic-release
+          filters:
+            branches:
+              only: master
