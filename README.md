@@ -1,4 +1,4 @@
-# go-paperspace
+# paperspace-go
 
 ## Usage
 ```go
