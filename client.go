@@ -16,24 +16,22 @@ type Client struct {
 	Backend Backend
 }
 
+func NewClientWithOptions(apiKey string, opts APIBackendOptions) *Client {
+	client := Client{
+		Backend: NewAPIBackendWithOptions(opts),
+	}
+	client.APIKey = apiKey
+	return &client
+}
+
 // client that makes requests to Gradient API
 func NewClient() *Client {
-	client := Client{
-		Backend: NewAPIBackend(),
-	}
-
-	apiKey := os.Getenv("PAPERSPACE_APIKEY")
-	if apiKey != "" {
-		client.APIKey = apiKey
-	}
-
-	return &client
+	return NewClientWithOptions(os.Getenv("PAPERSPACE_APIKEY"), APIBackendOptions{})
 }
 
 func NewClientWithBackend(backend Backend) *Client {
 	client := NewClient()
 	client.Backend = backend
-
 	return client
 }
 

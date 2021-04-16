@@ -32,27 +32,41 @@ type APIBackend struct {
 }
 
 func NewAPIBackend() *APIBackend {
-	apiBackend := APIBackend{
-		BaseURL: DefaultBaseURL,
-		HTTPClient: &http.Client{
-			Timeout: 15 * time.Second,
-		},
-		RetryCount: 0,
+	opts := APIBackendOptions{
+		BaseURL: os.Getenv("PAPERSPACE_BASE_URL"),
 	}
-
-	baseURL := os.Getenv("PAPERSPACE_BASEURL")
-	if baseURL != "" {
-		apiBackend.BaseURL = baseURL
-	}
-
 	debug := os.Getenv("PAPERSPACE_DEBUG")
 	if debug != "" {
-		apiBackend.Debug = true
+		opts.Debug = true
 	}
 
 	debugBody := os.Getenv("PAPERSPACE_DEBUG_BODY")
 	if debugBody != "" {
-		apiBackend.DebugBody = true
+		opts.DebugBody = true
+	}
+	return NewAPIBackendWithOptions(opts)
+}
+
+type APIBackendOptions struct {
+	BaseURL   string
+	Debug     bool
+	DebugBody bool
+}
+
+func NewAPIBackendWithOptions(opts APIBackendOptions) *APIBackend {
+	base := DefaultBaseURL
+	if opts.BaseURL != "" {
+		base = opts.BaseURL
+	}
+
+	apiBackend := APIBackend{
+		BaseURL: base,
+		HTTPClient: &http.Client{
+			Timeout: 15 * time.Second,
+		},
+		RetryCount: 0,
+		Debug:      opts.Debug,
+		DebugBody:  opts.DebugBody,
 	}
 
 	return &apiBackend
