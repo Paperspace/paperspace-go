@@ -90,16 +90,17 @@ var ClusterPlatforms = []ClusterPlatformType{
 var DefaultClusterType = 3
 
 type Cluster struct {
-	APIToken          APIToken            `json:"apiToken"`
-	Domain            string              `json:"fqdn"`
-	Platform          ClusterPlatformType `json:"cloud"`
-	Name              string              `json:"name"`
-	ID                string              `json:"id"`
-	Region            string              `json:"region,omitempty"`
-	S3Credential      S3Credential        `json:"s3Credential"`
-	ContainerRegistry *ContainerRegistry  `json:"containerRegistry,omitempty"`
-	TeamID            string              `json:"teamId"`
-	Type              string              `json:"type,omitempty"`
+	APIToken                  APIToken                  `json:"apiToken"`
+	ClusterAuthorizationToken ClusterAuthorizationToken `json:"clusterAuthorizationToken"`
+	Domain                    string                    `json:"fqdn"`
+	Platform                  ClusterPlatformType       `json:"cloud"`
+	Name                      string                    `json:"name"`
+	ID                        string                    `json:"id"`
+	Region                    string                    `json:"region,omitempty"`
+	S3Credential              S3Credential              `json:"s3Credential"`
+	ContainerRegistry         *ContainerRegistry        `json:"containerRegistry,omitempty"`
+	TeamID                    string                    `json:"teamId"`
+	Type                      string                    `json:"type,omitempty"`
 }
 
 type ClusterCreateParams struct {
