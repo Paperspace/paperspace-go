@@ -30,40 +30,10 @@ var ClusterAWSRegions = []string{
 }
 
 var ClusterAzureRegions = []string{
-	"australiacentral",
-	"australiaeast",
-	"australiasoutheast",
-	"brazilsouth",
-	"brazilsoutheast",
-	"canadacentral",
-	"canadaeast",
-	"centralindia",
 	"centralus",
 	"eastasia",
 	"eastus",
 	"eastus2",
-	"francecentral",
-	"francesouth",
-	"germanynorth",
-	"germanywestcentral",
-	"japaneast",
-	"japanwest",
-	"koreacentral",
-	"koreasouth",
-	"northcentralus",
-	"northeurope",
-	"norwayeast",
-	"norwaywest",
-	"southafricanorth",
-	"southcentralus",
-	"southindia",
-	"southeastasia",
-	"switzerlandnorth",
-	"switzerlandwest",
-	"uaecentral",
-	"uaenorth",
-	"uksouth",
-	"ukwest",
 	"westcentralus",
 	"westeurope",
 	"westus",
@@ -161,6 +131,7 @@ type ClusterUpdateS3Params struct {
 
 	AccessKey string `json:"accessKey,omitempty"`
 	Bucket    string `json:"bucket,omitempty"`
+	Endpoint  string `json:"endpoint,omitempty"`
 	SecretKey string `json:"secretKey,omitempty"`
 }
 
