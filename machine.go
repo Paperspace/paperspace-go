@@ -42,6 +42,7 @@ type Machine struct {
 	ScriptID               string       `json:"scriptId"`
 	DtLastRun              string       `json:"dtLastRun"`
 	IsManaged              bool         `json:"isManaged"`
+	MachineType            string       `json:"machineType"`
 }
 
 type MachineCreateParams struct {
