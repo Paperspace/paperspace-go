@@ -34,7 +34,7 @@ var _ = Describe("SSHKeys", func() {
 		It("should work", func() {
 			client, server := mockGQL(
 				`{
-	"query": "mutation($input:CreateSSHKeyInput!){createSSHKey(input: $input){sshKey{id,dtCreated,dtModified}}}",
+	"query": "mutation($input:CreateSSHKeyInput!){createSSHKey(input: $input){sshKey{id,name,publicKey,dtCreated,dtModified,dtDeleted}}}",
 	"variables": { 
 		"input": { 
 			"name": "name", 
@@ -44,8 +44,11 @@ var _ = Describe("SSHKeys", func() {
 		"createSSHKey": {
 			"sshKey": {
 				"id": "some-uuid-v4",
+				"name": "name",
+				"publicKey": "public-ssh-key",
 				"dtCreated": "2021-11-09T17:43:48.102Z",
-				"dtModified": "2021-11-09T17:43:48.105Z"}}}}`,
+				"dtModified": "2021-11-09T17:43:48.105Z",
+				"dtDeleted": null}}}}`,
 			)
 			defer server.Close()
 
@@ -60,7 +63,7 @@ var _ = Describe("SSHKeys", func() {
 		It("should work", func() {
 			client, server := mockGQL(
 				`{
-	"query": "mutation($input:DeleteSSHKeyInput!){deleteSSHKey(input: $input){sshKey{name,publicKey,dtCreated,dtModified,dtDeleted}}}",
+	"query": "mutation($input:DeleteSSHKeyInput!){deleteSSHKey(input: $input){sshKey{id,name,publicKey,dtCreated,dtModified,dtDeleted}}}",
 	"variables": { 
 		"input": { 
 			"id": "some-uuid-v4"}}}`,
@@ -68,6 +71,7 @@ var _ = Describe("SSHKeys", func() {
 	"data":{
 		"deleteSSHKey":{
 			"sshKey": {
+				"id": "some-uuid-v4",
 				"name": "name",
 				"publicKey": "public-ssh-key",
 				"dtCreated": "2021-11-09T17:43:48.102Z",
@@ -87,17 +91,18 @@ var _ = Describe("SSHKeys", func() {
 		It("should work", func() {
 			client, server := mockGQL(
 				`{
-	"query": "query($input:String!){sshKey(name: $input){id,publicKey,dtCreated,dtModified,dtDeleted}}",
+	"query": "query($input:String!){sshKey(name: $input){id,name,publicKey,dtCreated,dtModified,dtDeleted}}",
 	"variables": {
 		"input": "name"}}`,
 				`{
 	"data":{
 		"sshKey": {
 			"id": "some-uuid-v4",
+			"name": "name",
 			"publicKey": "public-ssh-key",
 			"dtCreated": "2021-11-09T17:43:48.102Z",
 			"dtModified": "2021-11-09T17:43:48.105Z",
-			"dtDeleted": "2021-11-09T17:43:48.105Z"}}}}`,
+			"dtDeleted": null}}}}`,
 			)
 			defer server.Close()
 
@@ -122,14 +127,14 @@ var _ = Describe("SSHKeys", func() {
 			  "publicKey": "public-ssh-key",
 			  "dtCreated": "2021-11-09T17:43:48.102Z",
 			  "dtModified": "2021-11-09T17:43:48.105Z",
-			  "dtDeleted": "2021-11-09T17:43:48.105Z"
+			  "dtDeleted": null
 			}, {
 			  "id": "some-uuid-v4-1",
 			  "name": "name-1",
 			  "publicKey": "public-ssh-key",
 			  "dtCreated": "2021-11-09T17:43:48.102Z",
 			  "dtModified": "2021-11-09T17:43:48.105Z",
-			  "dtDeleted": "2021-11-09T17:43:48.105Z"
+			  "dtDeleted": null
 			}]}}}`,
 			)
 			defer server.Close()
