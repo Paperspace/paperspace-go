@@ -13,6 +13,8 @@ const (
 	ClusterPlatformDGX        ClusterPlatformType = "nvidia-dgx"
 	ClusterPlatformMetal      ClusterPlatformType = "metal"
 	ClusterPlatformPaperspace ClusterPlatformType = "paperspace-cloud"
+	ClusterPlatformGraphcore  ClusterPlatformType = "graphcore"
+	ClusterPlatformSambaNova  ClusterPlatformType = "sambanova"
 )
 
 var ClusterAWSRegions = []string{
@@ -86,6 +88,8 @@ var ClusterPlatforms = []ClusterPlatformType{
 	ClusterPlatformGCP,
 	ClusterPlatformMetal,
 	ClusterPlatformPaperspace,
+	ClusterPlatformGraphcore,
+	ClusterPlatformSambaNova,
 }
 var DefaultClusterType = 3
 
